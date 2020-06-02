@@ -5,6 +5,7 @@ class snake:
     # class variables
     dirs = ('N', 'S', 'E', 'W')
     cur_dir = 'E'
+    last_dir = 'E'
     snake_len = 3
     start_point = (5, 5)
     snake_pos = list(start_point)
@@ -53,17 +54,38 @@ class snake:
         else:
             print("Invalid direction")
 
-        # check if snake is out of bounds
+        # check if snake dies
         if (self.snake_pos[0] < 0 or self.snake_pos[0] > 9) or \
            (self.snake_pos[1] < 0 or self.snake_pos[1] > 9) or \
            (self.grid[self.snake_pos[0]][self.snake_pos[1]] > 0):
             return 'Game Over'
 
-        self.update_grid()
+        # check if snake eats fruit
+        if (self.grid[self.snake_pos[0]][self.snake_pos[1]] == -1):
+            self.snake_len += 1
+        else:
+            for row in self.grid:
+                for cell in range(len(row)):
+                    if row[cell] > 0:
+                        row[cell] -= 1
 
-    def update_grid(self):
-        for row in self.grid:
-            for cell in row:
-                if cell > 0:
-                    cell -= 1
+        # update the grid after moving and checking if snake is dead
+        
         self.grid[self.snake_pos[0]][self.snake_pos[1]] = self.snake_len
+
+        # update the last direction
+        self.last_dir = self.cur_dir
+
+
+    # check if snake can change direction
+    def change_dir(self, new_dir):
+        if (self.last_dir == 'E' and new_dir != 'W') or \
+            (self.last_dir == 'W' and new_dir != 'E') or \
+            (self.last_dir == 'N' and new_dir != 'S') or \
+            (self.last_dir == 'S' and new_dir != 'N'):
+            self.cur_dir = new_dir
+
+    def display(self):
+        for each in self.grid:
+            print(each)
+        print()
