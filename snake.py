@@ -23,6 +23,8 @@ class snake:
 
     # function to run when starting game
     def start(self):
+        # clear the grid
+        self.reset()
         # place snake
         self.grid[self.start_point[0]][self.start_point[1]] = self.snake_len
         # place fruit
@@ -58,7 +60,7 @@ class snake:
         if (self.snake_pos[0] < 0 or self.snake_pos[0] > 9) or \
            (self.snake_pos[1] < 0 or self.snake_pos[1] > 9) or \
            (self.grid[self.snake_pos[0]][self.snake_pos[1]] > 0):
-            return 'Game Over'
+            return 0
 
         # check if snake eats fruit
         if (self.grid[self.snake_pos[0]][self.snake_pos[1]] == -1):
@@ -89,3 +91,9 @@ class snake:
         for each in self.grid:
             print(each)
         print()
+
+    def reset(self):
+        self.snake_pos = list(self.start_point)
+        for x in range(len(self.grid)):
+            for y in range(len(self.grid[x])):
+                self.grid[x][y] = 0
