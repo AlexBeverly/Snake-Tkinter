@@ -46,6 +46,7 @@ def step():
         isRunning = True
         s.start()
     
+# testing the step function
 step()
 board.after(2000, step)
 board.after(10000, step)
