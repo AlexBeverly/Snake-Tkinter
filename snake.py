@@ -59,7 +59,7 @@ class snake:
         # check if snake dies
         if (self.snake_pos[0] < 0 or self.snake_pos[0] > 9) or \
            (self.snake_pos[1] < 0 or self.snake_pos[1] > 9) or \
-           (self.grid[self.snake_pos[0]][self.snake_pos[1]] > 0):
+           (self.grid[self.snake_pos[0]][self.snake_pos[1]] > 1):
             return 0
 
         # check if snake eats fruit
@@ -87,11 +87,13 @@ class snake:
             (self.last_dir == 'S' and new_dir != 'N'):
             self.cur_dir = new_dir
 
+    # print grid values
     def display(self):
         for each in self.grid:
             print(each)
         print()
 
+    # reset snake position and clear grid
     def reset(self):
         self.snake_pos = list(self.start_point)
         for x in range(len(self.grid)):
