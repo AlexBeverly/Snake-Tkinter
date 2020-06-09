@@ -35,21 +35,37 @@ def draw_snake():
 def step():
     global isRunning
     global board
-    if isRunning:
-        state = s.move()
-        draw_snake()
-        if state != 0:
-            board.after(1000, step)
-        else:
-            isRunning = False
-    else:
+    
+    if not isRunning:
         isRunning = True
         s.start()
+    state = s.move()
+    draw_snake()
+    if state != 0:
+        board.after(1000,step)
+    else:
+        isRunning = False
+
+def change_dir(new_dir):
+    global isRunning
+    # change direction
+    s.change_dir(new_dir)
+    # start game if not running
+    if not isRunning:
+        step()
+
+    
     
 # testing the step function
-step()
-board.after(2000, step)
-board.after(10000, step)
-board.after(11000, step)
+#step()
+
+root.bind('<Up>', lambda d:change_dir('N'))
+root.bind('<Down>', lambda d:change_dir('S'))
+root.bind('<Right>', lambda d:change_dir('E'))
+root.bind('<Left>', lambda d:change_dir('W'))
+
+draw_snake()
+
+
 
 mainloop()
