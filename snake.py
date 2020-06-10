@@ -65,6 +65,7 @@ class snake:
         # check if snake eats fruit
         if (self.grid[self.snake_pos[0]][self.snake_pos[1]] == -1):
             self.snake_len += 1
+            self.place_fruit()
         else:
             for row in self.grid:
                 for cell in range(len(row)):
